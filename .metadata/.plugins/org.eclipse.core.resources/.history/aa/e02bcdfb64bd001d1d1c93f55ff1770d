@@ -1,0 +1,5 @@
+package com.device.repository;
+
+public class DeviceRepository {
+
+}

@@ -1,0 +1,11 @@
+package com.user.entity;
+
+import jakarta.persistence.Entity;
+
+@Entity
+public class Device {
+
+	private int deviceId;
+	private String deviceName;
+	private String devicePrice;
+}

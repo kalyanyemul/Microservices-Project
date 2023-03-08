@@ -1,0 +1,6 @@
+package com.device.service;
+
+
+public interface DeviceService {
+
+}

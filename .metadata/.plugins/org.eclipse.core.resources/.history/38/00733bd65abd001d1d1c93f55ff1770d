@@ -1,0 +1,48 @@
+package com.user.entity;
+
+import jakarta.persistence.Entity;
+
+@Entity
+public class Device {
+
+	private int deviceId;
+	private String deviceName;
+	private String devicePrice;
+	
+	public Device(int deviceId, String deviceName, String devicePrice) {
+		this.deviceId = deviceId;
+		this.deviceName = deviceName;
+		this.devicePrice = devicePrice;
+	}
+
+	public Device() {
+
+	}
+
+	public int getDeviceId() {
+		return deviceId;
+	}
+
+	public void setDeviceId(int deviceId) {
+		this.deviceId = deviceId;
+	}
+
+	public String getDeviceName() {
+		return deviceName;
+	}
+
+	public void setDeviceName(String deviceName) {
+		this.deviceName = deviceName;
+	}
+
+	public String getDevicePrice() {
+		return devicePrice;
+	}
+
+	public void setDevicePrice(String devicePrice) {
+		this.devicePrice = devicePrice;
+	}
+
+	
+	
+}

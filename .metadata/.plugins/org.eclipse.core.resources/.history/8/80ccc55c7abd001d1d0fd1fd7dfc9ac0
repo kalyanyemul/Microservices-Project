@@ -1,0 +1,14 @@
+package com.device.service;
+
+import java.util.List;
+
+import com.device.entity.Device;
+
+public interface DeviceService {
+
+	public Device getById(int id);
+	
+	public List<Device> getDeviceByUserId(int id);
+	
+	
+}

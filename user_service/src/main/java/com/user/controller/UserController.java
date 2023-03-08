@@ -1,0 +1,78 @@
+package com.user.controller;
+
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+import com.user.entity.Device;
+import com.user.entity.User;
+import com.user.service.UserServiceImpl;
+
+@RestController
+@RequestMapping("/user")
+public class UserController {
+
+	
+	@Autowired
+	private UserServiceImpl userService;
+	
+	@Autowired
+	private RestTemplate restTemplate;
+	
+	@GetMapping("/{id}")
+	public User getById(@PathVariable("id") int id) {
+		User user = this.userService.getUserById(id);
+//		localhost:8020/device/user/101
+		List device = this.restTemplate.getForObject("http://device-service/device/user/" + user.getUserId(), List.class);
+		user.setDevices(device);
+		return user;		
+	}
+
+	
+	@GetMapping("/showAll")
+	public List<User> getAllUsers(){
+		List<User> user = userService.getAll();
+		
+		for(int i = 0; i<user.size(); i++) {
+			User dum = user.remove(0);
+			int id = dum.getUserId();
+			List Device = this.restTemplate.getForObject("http://device-service/device/user/" + id, List.class);
+			dum.setDevices(Device);
+			user.add(dum);
+		}
+		return user;
+	}
+	
+	
+	@PostMapping("/add")
+	public User saveUser(@RequestBody User user) {
+		userService.saveUser(user);
+		return user;
+	}
+
+	
+	@PutMapping("/update/{id}")
+	public User updateUser(@RequestBody User user, @PathVariable("id") int userId) {
+		return userService.updateUser(user, userId);
+	}
+	
+	@DeleteMapping("/delete/{id}")
+	public void deleteUserById(@PathVariable("id") int id) {
+		userService.deleteById(id);
+	}
+	
+	
+	
+	
+}

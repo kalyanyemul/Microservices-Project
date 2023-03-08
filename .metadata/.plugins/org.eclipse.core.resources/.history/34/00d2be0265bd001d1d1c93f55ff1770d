@@ -1,0 +1,5 @@
+package com.device.service;
+
+public class DeviceServiceImpl {
+
+}

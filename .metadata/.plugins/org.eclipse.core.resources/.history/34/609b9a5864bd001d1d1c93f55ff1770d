@@ -1,0 +1,5 @@
+package com.device.entity;
+
+public class Device {
+
+}

@@ -1,0 +1,8 @@
+package com.device.service;
+
+import com.device.entity.Device;
+
+public interface DeviceService {
+
+	public Device getById(int id);
+}

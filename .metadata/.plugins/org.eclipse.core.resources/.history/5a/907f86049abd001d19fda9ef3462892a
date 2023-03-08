@@ -1,0 +1,60 @@
+package com.example.student.service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.student.entity.Student;
+import com.example.student.repository.StudentRepository;
+
+
+@Service
+@Transactional
+
+public class StudentService {
+
+	 @Autowired
+	    StudentRepository repository;
+
+	    public Student getStudentById(int studentId)
+	    {
+	        return repository.findById(studentId).get();
+	    }
+
+	    public void saveStudent(Student student) {
+	        repository.save(student);
+	    }
+
+	    public Student updateStudent(Student student, int studentId) {
+	        return repository.save(student);
+	    }
+
+	    public void delete(int studentId) {
+	        repository.deleteById(studentId);
+	    }
+	    
+//	    public List<Student> findAll() {
+//	    	return repository.findAll();
+//	    }
+	    
+	    
+	    public List<Student> findAll(){
+	    	List<Student> std = new ArrayList<>();
+	    	repository.findAll().forEach(std::add);
+	    	return std;
+	    }
+	    
+
+	    
+	    
+	    public List<Student> findBystudentfirstName (String studentfirstName){
+	    	List<Student> std =  repository.findAll().stream().filter(s->s.getStudentfirstName().equals(studentfirstName)).collect(Collectors.toList());
+	    return std;
+	    }
+	    
+}

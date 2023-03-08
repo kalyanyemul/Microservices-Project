@@ -1,0 +1,35 @@
+package com.user.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.user.entity.User;
+import com.user.repository.UserRepository;
+
+@Service
+public class UserServiceImpl implements UserService{
+
+	@Autowired
+	private UserRepository userRepo;
+	
+
+	@Override
+	public User getUserById(int id) {
+		Optional<User> u = userRepo.findById(id);
+		if (u.isPresent()) {
+			return u.get();			
+		}
+		return null;
+	}
+
+
+	@Override
+	public List<User> getAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

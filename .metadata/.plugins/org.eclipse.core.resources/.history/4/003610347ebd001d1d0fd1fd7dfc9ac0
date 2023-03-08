@@ -1,0 +1,42 @@
+package com.user.controller;
+
+import java.awt.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+import com.user.entity.User;
+import com.user.service.UserServiceImpl;
+
+@RestController
+@RequestMapping("/user")
+public class UserController {
+
+	
+	@Autowired
+	private UserServiceImpl userService;
+	
+	@Autowired
+	private RestTemplate restTemplate;
+	
+	@GetMapping("/{id}")
+	public User getById(@PathVariable("id") int id) {
+		
+		User user = this.userService.getUserById(id);
+//		localhost:8020/device/user/101
+		
+		List<Device> device = this.restTemplate.getForObject("http://localhost:8020/device/user/" + user.getUserId(), List.class);
+		
+		user.setDevices(device);
+		
+		return user;		
+	}
+	
+	
+	
+}

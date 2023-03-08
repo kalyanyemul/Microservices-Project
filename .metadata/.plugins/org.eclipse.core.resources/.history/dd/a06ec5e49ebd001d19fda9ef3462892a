@@ -1,0 +1,71 @@
+package com.example.course.service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.course.entity.Course;
+import com.example.course.repository.CourseRepository;
+
+
+@Service
+@Transactional
+public class CourseService {
+
+	@Autowired
+    CourseRepository repository;
+	
+	List<Course>list = new ArrayList<>();
+
+    public Course getCourseById(int id)
+    {
+        return repository.findById(id).get();
+    }
+
+    public Course saveCourse(Course course) {
+    	Course result = repository.save(course);
+//        repository.save(course);
+    	return result;
+    }
+
+    public Course updateCourse(Course course, int id) {
+        return repository.save(course);
+    }
+
+    public void delete(int id) {
+        repository.deleteById(id);
+    }
+
+	public List<Course> findAll() {
+		// TODO Auto-generated method stub
+		return repository.findAll();
+	}
+
+	
+	 public List<Course> getCoursesOfStudent(int studentId) {
+	        List<Course> co = null;
+	        try {
+	            co = this.repository.findByStudentId(studentId);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	        return co;
+//	        return list.stream().filter(vehicle -> vehicle.getStudentId().equals(studentId)).collect(Collectors.toList());
+	    }
+	 
+	 
+	 public List<Course> getCoursesByDescription(String description){
+		 List<Course> course =  repository.findAll().stream().filter(s->s.getDescription().equals(description)).collect(Collectors.toList());
+		    return course;
+	 }
+		
+	 public List<Course> getCoursesByDuration(String duration){
+		 List<Course> course = repository.findAll().stream().filter(s->s.getDuration().equals(duration)).collect(Collectors.toList());
+		 return course;
+	 }
+}

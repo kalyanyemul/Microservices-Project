@@ -1,0 +1,49 @@
+package com.user.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.user.entity.User;
+import com.user.repository.UserRepository;
+
+@Service
+public class UserServiceImpl implements UserService{
+
+	@Autowired
+	private UserRepository userRepo;
+	
+
+	@Override
+	public User getUserById(int id) {
+		Optional<User> u = userRepo.findById(id);
+		if (u.isPresent()) {
+			return u.get();			
+		}
+		return null;
+	}
+
+	@Override
+	public List<User> getAll() {
+
+		return null;
+	}
+
+	@Override
+	public void saveUser(User user) {
+		userRepo.save(user);
+	}
+
+	@Override
+	public User updateUser(User user) {
+		return userRepo.save(user);
+	}
+
+	@Override
+	public void deleteById(int userId) {
+		userRepo.deleteById(userId);
+	}
+
+}
